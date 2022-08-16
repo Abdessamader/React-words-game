@@ -1,28 +1,35 @@
-import { useEffect, useState } from "react";
-
+import React from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
   const [solution, setSolution] = useState(null)
+  
   useEffect(() => {
-    fetch(' http://localhost:8000/solutions')
-    .then(res => res.json())
-    .then(data => {
-      // random integer between 0 & 14
-    })
-  }, [])
+    fetch('http://localhost:8000/solutions')
+      .then(res => res.json())
+      .then(json => {
+        // random int between 0 & 14
+        const randomSolution = json[Math.floor(Math.random()*json.length)]
+        setSolution(randomSolution.word)
+      })
+  }, [setSolution])
 
-
-
-  return (
+  return (<>
     <div className="App">
       <h1>Wordle (Lingo)</h1>
+      {solution && <div>Solution is: {solution}</div>}
     </div>
-  );
-}
+
+
+
+    </>
+  )
+};
 
 export default App
 
 /* 
+
 data we need to track:
   -- solution
     -- 5 letter string, e.g. 'drain'
@@ -36,6 +43,7 @@ data we need to track:
     -- array of letter objects [{key: 'a', color: 'green'}, {}, {} ...]
   -- number of turns
     -- an integer 0 - 6
+
 game process:
   -- entering words:
     -- user enters a letter & a square is filled with that letter
@@ -57,4 +65,5 @@ game process:
       -- modal to say 'well done'
     -- when the user runs out of guesses
       -- modal to say 'unlucky'
+
 */

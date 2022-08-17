@@ -4,14 +4,34 @@ const useWordle = (solution) => {
     const [turn, setTurn] = useState(0) 
     const [currentGuess, setCurrentGuess] = useState('')
     const [guesses, setGuesses] = useState([]) // each guess is an array
-    const [history, setHistory] = useState([]) // each guess is a string
+    const [history, setHistory] = useState(['yagami','ninja']) // each guess is a string
     const [isCorrect, setIsCorrect] = useState(false)
 
     // format a guess into an array of letter objects
     // e.g. [{key:'a'},{color:'yellow'}]
 
     const formatGuess = () => {
+        let solutionArray = [...solution]
+        let formatGuess = [...currentGuess].map((letter)=>{
+            return {key: letter, color: 'grey'}
+        })
 
+        // find any green letters 
+        formatGuess.forEach((letter,i)=>{
+            if (solutionArray[i] === letter.key) {
+                formatGuess[i].color = 'green'
+                solutionArray[i] = null
+            }
+        })
+
+        // find any yellow letters
+        formatGuess.forEach((letter,i)=>{
+            if(solutionArray.includes(letter.key)&& letter.color !== 'green'){
+                formatGuess[i].color ='yellow'
+                solutionArray[solutionArray.indexOf(letter.key)]= null
+            }
+        })
+        return formatGuess
     }
 
     // add a new guess to the guesses state 
@@ -26,6 +46,26 @@ const useWordle = (solution) => {
     // if user presses enter, add the new guess
 
     const handleKeyUp = ({key}) => {
+        if(key === 'Enter') {
+            // only add guess the turn is less than 5
+            if(turn > 5) {
+                console.log('you used all your guesses');
+                return
+            }
+
+            // do not allow duplicate words
+            if(history.includes(currentGuess)) {
+                console.log('you already tried that word')
+                return
+            }
+            // check word is 5 chars long
+            if(currentGuess.length !== 5) {
+                console.log('word must be 5 chars long')
+                return
+            }
+            formatGuess()
+        }
+    
         
         if(key === 'Backspace') {
             setCurrentGuess((prev) => {

@@ -10,7 +10,10 @@ export default function Wordle({solution}) {
        
        return () => window.removeEventListener('keyup', handleKeyUp)
     }, [handleKeyUp])
-  return (
-    <div>current guess - {currentGuess}</div>
+  return (<>
+
+    <div>Solution - {solution} </div>
+    <div>Current guess - {currentGuess}</div>
+  </>
   )
 }

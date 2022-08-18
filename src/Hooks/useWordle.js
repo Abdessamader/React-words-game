@@ -12,34 +12,34 @@ const useWordle = (solution) => {
 
     const formatGuess = () => {
         let solutionArray = [...solution]
-        let formatGuess = [...currentGuess].map((letter)=>{
+        let formattedGuess = [...currentGuess].map((letter)=>{
             return {key: letter, color: 'grey'}
         })
 
         // find any green letters 
-        formatGuess.forEach((letter,i)=>{
+        formattedGuess.forEach((letter,i)=>{
             if (solutionArray[i] === letter.key) {
-                formatGuess[i].color = 'green'
+                formattedGuess[i].color = 'green'
                 solutionArray[i] = null
             }
         })
 
         // find any yellow letters
-        formatGuess.forEach((letter,i)=>{
+        formattedGuess.forEach((letter,i)=>{
             if(solutionArray.includes(letter.key)&& letter.color !== 'green'){
-                formatGuess[i].color ='yellow'
+                formattedGuess[i].color ='yellow'
                 solutionArray[solutionArray.indexOf(letter.key)]= null
             }
         })
-        return formatGuess
+        return formattedGuess
     }
 
     // add a new guess to the guesses state 
     // update the isCorrect state if the guess is correct 
     // add one to the turn state 
 
-    const addNewGuess = () => {
-
+    const addNewGuess = ( formattedGuess ) => {
+        
     }
 
     // handle keyup event & track current guess 
@@ -63,7 +63,9 @@ const useWordle = (solution) => {
                 console.log('word must be 5 chars long')
                 return
             }
-            formatGuess()
+          const formatted = formatGuess()
+          addNewGuess(formatted)
+           
         }
     
         

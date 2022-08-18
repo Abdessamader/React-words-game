@@ -1,6 +1,6 @@
 {
     "solutions":[
-        {"word":"yugi", "id": 1},
+        {"id": 1, "word": "yugio"},
         {"id": 2, "word": "spade"},
         {"id": 3, "word": "pools"},
         {"id": 4, "word": "drive"},

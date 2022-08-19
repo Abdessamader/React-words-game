@@ -47,6 +47,13 @@ const useWordle = (solution) => {
             newGuesses[turn] = formattedGuess
             return newGuesses
         })
+        setHistory((prevHistory)=> {
+            return[...prevHistory, currentGuess]
+        })
+        setTurn((prevTurn)=>{
+            prevTurn + 1
+        })
+        setCurrentGuess('')
     }
 
     // handle keyup event & track current guess 
@@ -92,7 +99,7 @@ const useWordle = (solution) => {
         }
     }
 
-    return { turn, currentGuess, isCorrect, handleKeyUp}
+    return { turn, currentGuess, isCorrect, guesses, handleKeyUp}
 }
 
 export default useWordle 
